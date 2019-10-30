@@ -113,7 +113,7 @@ namespace Shadowsocks.Model
 
         public static List<Server> GetServers(string ssURL)
         {
-            var serverUrls = ssURL.Split('\r', '\n');
+            var serverUrls = ssURL.Split('\r', '\n', ' ');
 
             List<Server> servers = new List<Server>();
             foreach (string serverUrl in serverUrls)
@@ -169,7 +169,7 @@ namespace Shadowsocks.Model
                     server.password = userInfoParts[1];
 
                     NameValueCollection queryParameters = HttpUtility.ParseQueryString(parsedUrl.Query);
-                    string[] pluginParts = HttpUtility.UrlDecode(queryParameters["plugin"] ?? "").Split(new[] { ';' }, 2);
+                    string[] pluginParts = (queryParameters["plugin"] ?? "").Split(new[] { ';' }, 2);
                     if (pluginParts.Length > 0)
                     {
                         server.plugin = pluginParts[0] ?? "";
